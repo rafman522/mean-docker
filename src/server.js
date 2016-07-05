@@ -1,15 +1,4 @@
-﻿var devices = [
-    {
-        "id": 1,
-        "name": "Device 1"
-    },
-    {
-        "id": 2,
-        "name": "Device 2"
-    }
-];
-
-var debug = require('debug')('server');
+﻿var debug = require('debug')('server');
 var express = require('express');
 var app = express();
 
@@ -20,19 +9,24 @@ var mongoose = require('mongoose');
 
 mongoose.connect(config.db);
 
-var device = require('./models/device');
+var Device = require('./models/device');
 
 var router = express.Router();
 
+var device = new Device();
+device.id = 1;
+device.name = "Device 1";
+device.save();
+
 router.get('/devices', function (req, res) {
-    var result = device.find(function (err, devices) {
+    var result = Device.find(function (err, devices) {
         if (err) {
             debug("/devices-ERROR:", err);
             res.status(500).jsonp(err);
         }
         else {
-            debug('GET devices', result);
-            res.status(200).jsonp(result);
+            debug('GET devices', devices);
+            res.status(200).jsonp(devices);
         }
     });
 });

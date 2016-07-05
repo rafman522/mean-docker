@@ -9,4 +9,4 @@ var deviceSchema = new schema({
     timestamps: { created: 'created', updated: 'updated' }
 });
 
-module.exports = mongoose.model('device', deviceSchema);
+module.exports = mongoose.model('Device', deviceSchema);
