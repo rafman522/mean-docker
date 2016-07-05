@@ -25,5 +25,7 @@ To run the application use the 'up' command.
 
 > docker-compose up
 
+> NOTE: There are some issues with Docker 1.12.0-rc3  use the command docker-compose up -d to start the containers.
+
 Browse to http://{Docker-IP-Address}:{Port}/devices
 
