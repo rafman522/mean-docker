@@ -1,5 +1,5 @@
 # MEAN-Docker
-Referece architecture for creating a MEAN application and hosting in Docker and using NGINX to serve static content. 
+Reference architecture for creating a MEAN application and hosting in Docker and using NGINX to serve static content. 
 
 # Notes:
 This reference architecture was implemented using docker for windows but should work anywhere.
@@ -27,5 +27,5 @@ To run the application use the 'up' command.
 
 > NOTE: There are some issues with Docker 1.12.0-rc3  use the command docker-compose up -d to start the containers.
 
-Browse to http://{Docker-IP-Address}:{Port}/devices
+Browse to http://{Docker-IP-Address}:{Port}/api/devices
 

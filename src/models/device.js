@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
 var deviceSchema = new schema({
-    id: Number,
+    uri: String,
     name: String,
 },
 {

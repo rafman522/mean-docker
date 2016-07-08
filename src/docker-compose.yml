@@ -10,5 +10,8 @@ inventory:
     environment:
     - NODE_ENV=production
     - MONGODB_ADDRESS=mongodb
+    - DEBUG=server
 mongodb:
-    image: mongo
+    image: mongo:latest
+    volumes:
+    - device-data:/data/db
