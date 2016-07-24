@@ -1,5 +1,6 @@
 ---
-inventory:
+deviceapi:
+    container_name: "device-api"
     build: .
     command: npm start
     ports:
@@ -15,3 +16,8 @@ mongodb:
     image: mongo:latest
     volumes:
     - device-data:/data/db
+nginx:
+    image: nginx:latest
+    ports:
+    - "80:80"
+    - "443:443"
