@@ -33,11 +33,12 @@ Browse to http://{Docker-IP-Address}:{Port}/api/devices
 Debugging support in VS Code was implemented using [Yeaoman](http://yeoman.io) and [generator-docker](https://github.com/Microsoft/generator-docker).
 
 To get started, run through the following steps:
+
 1. Start VS Code
 2. Open the src folder at the root of this repo (File -> Open)
 3. From VS Code, open the command palette (Mac: [⌘] + [P], Windows: [CTRL] + [P])
 4. Enter: `task composeForDebug` This will compose your containers using the dockerTask.sh script
-5. [F5] (Mac: [fn] + [F5]) to start the node debugger within the container
+5. \[F5\] (Mac: [fn] + [F5]) to start the node debugger within the container
     1. _Since the implementation uses `nodemon -L --debug-brk`, the debugger will break on the first line of your main file, so that you can debug the initialization of your app_
 
 Once you have completed those steps, you should be free to put breakpoints anywhere in your file to debug the node.js server side code.  For starters, try putting a break point in the root get method and then navigate to http://{Docker-IP-Address}:8080/api/devices.
