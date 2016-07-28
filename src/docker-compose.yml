@@ -1,23 +1,27 @@
----
-deviceapi:
-    container_name: "device-api"
-    build: .
-    command: npm start
-    ports:
-    - "8080:8080"
-    links:
-    - mongodb
-    - mongodb:127.0.0.1
-    environment:
-    - NODE_ENV=production
-    - MONGODB_ADDRESS=mongodb
-    - DEBUG=server
-mongodb:
-    image: mongo:latest
-    volumes:
-    - device-data:/data/db
-nginx:
-    image: nginx:latest
-    ports:
-    - "80:80"
-    - "443:443"
+version: '2'
+services:
+    deviceapi:
+        container_name: "device-api"
+        build: .
+        command: npm start
+        ports:
+        - "8080:8080"
+        links:
+        - mongodb
+        - mongodb:127.0.0.1
+        environment:
+        - NODE_ENV=production
+        - MONGODB_ADDRESS=mongodb
+        - DEBUG=server
+    mongodb:
+        image: mongo:latest
+        volumes:
+        - device-data:/data/db
+    nginx:
+        image: nginx:latest
+        ports:
+        - "80:80"
+        - "443:443"
+volumes:
+    device-data:
+        driver: local
