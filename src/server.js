@@ -72,14 +72,12 @@ router.route('/devices/:device_id')
             });
         });
     }).delete(function(req, res) {
-        Device.remove({
-            _id: req.param.device_id
-        }, function(err, device) {
+        Device.remove({ _id: req.params.device_id }, function(err, removed) {
             if(err) {
-                    res.status(500).jsonp(err);
+                res.status(500).jsonp(err);
             }
 
-            res.status(200).jsonp(device);
+            res.status(200).jsonp(removed);
         });
     });
 

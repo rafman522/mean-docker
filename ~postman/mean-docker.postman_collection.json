@@ -1,0 +1,115 @@
+{
+	"variables": [],
+	"info": {
+		"name": "mean-docker",
+		"_postman_id": "492a8c5d-684b-6b71-2581-fc6f268c441a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create_Then_Delete",
+			"description": "",
+			"item": [
+				{
+					"name": "Get all devices empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Body is correct\"] = responseBody === \"[]\";"
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/devices",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add new device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\r\ntests[\"responseBody is not empty\"] = responseBody !== \"\";\r\n\r\nvar jsonData = JSON.parse(responseBody);\r\ntests[\"Device uri is 'device://device1'\"] = jsonData.uri === \"device://device1\";\r\ntests[\"Device name is 'Device 1\"] = jsonData.name === \"Device 1\";\r\n\r\npostman.setEnvironmentVariable(\"device_id\", jsonData._id);\r\n"
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/devices",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"uri\": \"device://device1\", \"name\": \"Device 1\" }"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete device",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\r\ntests[\"responseBody is not empty\"] = responseBody !== \"\";\r\n\r\nvar jsonData = JSON.parse(responseBody);\r\ntests[\"n is 1\"] = jsonData.n === 1;"
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/devices/{{device_id}}",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get all devices empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Body is correct\"] = responseBody === \"[]\";"
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/devices",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

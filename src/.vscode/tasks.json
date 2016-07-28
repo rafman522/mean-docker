@@ -19,7 +19,7 @@
             {
                 "taskName": "compose",
                 "suppressTaskName": true,
-                "args": ["-ExecutionPolicy", "RemoteSigned", ".\\dockerTask.ps1", "-Compose", "-Environment", "debug" ],
+                "args": ["-ExecutionPolicy", "RemoteSigned", ".\\dockerTask.ps1", "-Compose", "-Environment", "release" ],
                 "isBuildCommand": false,
                 "showOutput": "always",
                 "echoCommand": true
@@ -50,7 +50,7 @@
             {
                 "taskName": "compose",
                 "suppressTaskName": true,
-                "args": [ "-c", "./dockerTask.sh compose debug" ],
+                "args": [ "-c", "./dockerTask.sh compose release" ],
                 "isBuildCommand": false,
                 "showOutput": "always"
             },
