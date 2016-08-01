@@ -35,7 +35,7 @@ Debugging support in VS Code was implemented using [Yeaoman](http://yeoman.io) a
 To get started, run through the following steps:
 
 1. Start VS Code
-2. Open the src folder at the root of this repo (File -> Open)
+2. Open the folder at the root of this repo (File -> Open)
 3. From VS Code, open the command palette (Mac: [⌘] + [P], Windows: [CTRL] + [P])
 4. Enter: `task composeForDebug` This will compose your containers using the dockerTask.sh script
 5. \[F5\] (Mac: [fn] + [F5]) to start the node debugger within the container
@@ -50,6 +50,8 @@ Once you have completed those steps, you should be free to put breakpoints anywh
 
 ## Available VS Code Tasks
 Tasks are executed thrugh the VS Code command palette (Mac: [⌘] + [P], Windows: [CTRL] + [P]).  Once you have opened the command palette, type task followed by whitespace and then any of the commands listed below:
+
+After every task is ran, the scripts will output "Finished!!!".
 
 ### composeForDebug
 As shown in the previous section the `composeForDebug` command will not only build the image from the Dockerfile.debug file, but will also start the containers so they can be debugged.
