@@ -33,6 +33,14 @@ Param(
     [switch]$Build,
     [Parameter(Mandatory=$True,ParameterSetName="Clean")]
     [switch]$Clean,
+    [Parameter(Mandatory=$True,ParameterSetName="Stop")]
+    [switch]$Stop,
+    [Parameter(Mandatory=$True,ParameterSetName="Down")]
+    [switch]$Down,
+    [Parameter(Mandatory=$True,ParameterSetName="Start")]
+    [switch]$Start,
+    [Parameter(Mandatory=$True,ParameterSetName="StartDebugging")]
+    [switch]$StartDebugging,
     [parameter(ParameterSetName="Compose")]
     [Parameter(ParameterSetName="ComposeForDebug")]
     [parameter(ParameterSetName="Build")]
