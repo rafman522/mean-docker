@@ -66,6 +66,42 @@ compose () {
   fi
 }
 
+stop () {
+  if [[ -z $ENVIRONMENT ]]; then
+    ENVIRONMENT="debug"
+  fi
+
+  composeFileName="docker-compose.yml"
+  if [[ $ENVIRONMENT != "release" ]]; then
+      composeFileName="docker-compose.$ENVIRONMENT.yml"
+  fi
+
+  if [[ ! -f $composeFileName ]]; then
+    echo "$ENVIRONMENT is not a valid parameter. File '$composeFileName' does not exist."
+  else
+    echo "Running compose file $composeFileName"
+    docker-compose -f $composeFileName -p $projectName stop
+  fi
+}
+
+down () {
+  if [[ -z $ENVIRONMENT ]]; then
+    ENVIRONMENT="debug"
+  fi
+
+  composeFileName="docker-compose.yml"
+  if [[ $ENVIRONMENT != "release" ]]; then
+      composeFileName="docker-compose.$ENVIRONMENT.yml"
+  fi
+
+  if [[ ! -f $composeFileName ]]; then
+    echo "$ENVIRONMENT is not a valid parameter. File '$composeFileName' does not exist."
+  else
+    echo "Running compose file $composeFileName"
+    docker-compose -f $composeFileName -p $projectName down
+  fi
+}
+
 openSite () {
   printf 'Opening site'
   until $(curl --output /dev/null --silent --head --fail $url); do
@@ -85,6 +121,8 @@ showUsage () {
   echo "Commands:"
   echo "    build: Builds a Docker image ('$imageName')."
   echo "    compose: Runs docker-compose."
+  echo "    down: Stops and removes the containers."
+  echo "    stop: Stops the containers."
   echo "    clean: Removes the image '$imageName' and kills all containers based on that image."
   echo "    composeForDebug: Builds the image and runs docker-compose."
   echo ""
@@ -122,8 +160,29 @@ else
             ENVIRONMENT=$(echo $2 | tr "[:upper:]" "[:lower:]")
             cleanAll
             ;;
+    "stop")
+            ENVIRONMENT=$(echo $2 | tr "[:upper:]" "[:lower:]")
+            stop
+            ;;
+    "down")
+            ENVIRONMENT=$(echo $2 | tr "[:upper:]" "[:lower:]")
+            down
+            ;;
+    "start")
+            ENVIRONMENT=$(echo $2 | tr "[:upper:]" "[:lower:]")
+            compose
+            ;;
+    "startDebugging")
+            ENVIRONMENT=$(echo $2 | tr "[:upper:]" "[:lower:]")
+            export REMOTE_DEBUGGING=1
+            compose
+            ;;            
     *)
             showUsage
             ;;
   esac
 fi
+
+echo " "
+echo " "
+echo "Finished!!!!"

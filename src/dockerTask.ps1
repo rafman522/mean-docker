@@ -7,8 +7,16 @@ Runs docker-compose.
 Builds a Docker image.
 .PARAMETER Clean
 Removes the image deviceapi and kills all containers based on that image.
+.PARAMETER Stop
+Stops all containers based on the image deviceapi.
+.PARAMETER Down
+Stops and removes all containers based on the image deviceapi.
 .PARAMETER ComposeForDebug
 Builds the image and runs docker-compose.
+.PARAMETER Start
+Runs docker-compose up.
+.PARAMETER StartDebugging
+Runs docker-compose up.
 .PARAMETER Environment
 The enviorment to build for (Debug or Release), defaults to Debug
 .EXAMPLE
@@ -29,6 +37,10 @@ Param(
     [Parameter(ParameterSetName="ComposeForDebug")]
     [parameter(ParameterSetName="Build")]
     [parameter(ParameterSetName="Clean")]
+    [parameter(ParameterSetName="Stop")]
+    [parameter(ParameterSetName="Down")]
+    [parameter(ParameterSetName="Start")]
+    [parameter(ParameterSetName="StartDebugging")]
     [ValidateNotNullOrEmpty()]
     [String]$Environment = "Debug"
 )
@@ -91,6 +103,38 @@ function Compose () {
     }
 }
 
+# Runs docker-compose stop.
+function Stop () {
+    $composeFileName = "docker-compose.yml"
+    if ($Environment -ne "Release") {
+        $composeFileName = "docker-compose.$Environment.yml"
+    }
+
+    if (Test-Path $composeFileName) {
+        Write-Host "Running compose file $composeFileName with stop"
+        docker-compose -f $composeFileName -p $projectName stop
+    }
+    else {
+        Write-Error -Message "$Environment is not a valid parameter. File '$dockerFileName' does not exist." -Category InvalidArgument
+    }
+}
+
+# Runs docker-compose down.
+function Down () {
+    $composeFileName = "docker-compose.yml"
+    if ($Environment -ne "Release") {
+        $composeFileName = "docker-compose.$Environment.yml"
+    }
+
+    if (Test-Path $composeFileName) {
+        Write-Host "Running compose file $composeFileName with down"
+        docker-compose -f $composeFileName -p $projectName down
+    }
+    else {
+        Write-Error -Message "$Environment is not a valid parameter. File '$dockerFileName' does not exist." -Category InvalidArgument
+    }
+}
+
 # Opens the remote site
 function OpenSite () {
     Write-Host "Opening site" -NoNewline
@@ -132,3 +176,20 @@ elseif($Build) {
 elseif ($Clean) {
     CleanAll
 }
+elseif ($Down) {
+    Down
+}
+elseif ($Stop) {
+    Stop
+}
+elseif ($Start) {
+    Compose
+}
+elseif ($StartDebugging) {
+    $env:REMOTE_DEBUGGING = 1
+    Compose
+}
+
+Write-Host " "
+Write-Host " "
+Write-Host "Finished!!!!"

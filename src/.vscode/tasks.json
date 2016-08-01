@@ -31,6 +31,38 @@
                 "isBuildCommand": false,
                 "showOutput": "always",
                 "echoCommand": true
+            },
+            {
+                "taskName": "start",
+                "suppressTaskName": true,
+                "args": ["-ExecutionPolicy", "RemoteSigned", ".\\dockerTask.ps1", "-Start", "-Environment", "release" ],
+                "isBuildCommand": false,
+                "showOutput": "always",
+                "echoCommand": true
+            },
+            {
+                "taskName": "startDebugging",
+                "suppressTaskName": true,
+                "args": ["-ExecutionPolicy", "RemoteSigned", ".\\dockerTask.ps1", "-StartDebugging", "-Environment", "debug" ],
+                "isBuildCommand": false,
+                "showOutput": "always",
+                "echoCommand": true
+            },
+            {
+                "taskName": "stop",
+                "suppressTaskName": true,
+                "args": ["-ExecutionPolicy", "RemoteSigned", ".\\dockerTask.ps1", "-Stop"],
+                "isBuildCommand": false,
+                "showOutput": "always",
+                "echoCommand": true
+            },
+            {
+                "taskName": "down",
+                "suppressTaskName": true,
+                "args": ["-ExecutionPolicy", "RemoteSigned", ".\\dockerTask.ps1", "-Down"],
+                "isBuildCommand": false,
+                "showOutput": "always",
+                "echoCommand": true
             }
         ]
     },
@@ -58,6 +90,34 @@
                 "taskName": "composeForDebug",
                 "suppressTaskName": true,
                 "args": [ "-c", "./dockerTask.sh composeForDebug debug" ],
+                "isBuildCommand": false,
+                "showOutput": "always"
+            },
+            {
+                "taskName": "start",
+                "suppressTaskName": true,
+                "args": [ "-c", "./dockerTask.sh start release" ],
+                "isBuildCommand": false,
+                "showOutput": "always"
+            },
+            {
+                "taskName": "startDebugging",
+                "suppressTaskName": true,
+                "args": [ "-c", "./dockerTask.sh startDebugging debug" ],
+                "isBuildCommand": false,
+                "showOutput": "always"
+            },
+            {
+                "taskName": "stop",
+                "suppressTaskName": true,
+                "args": [ "-c", "./dockerTask.sh stop" ],
+                "isBuildCommand": false,
+                "showOutput": "always"
+            },
+            {
+                "taskName": "down",
+                "suppressTaskName": true,
+                "args": [ "-c", "./dockerTask.sh down" ],
                 "isBuildCommand": false,
                 "showOutput": "always"
             }

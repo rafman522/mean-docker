@@ -46,3 +46,29 @@ Once you have completed those steps, you should be free to put breakpoints anywh
 > NOTE: If you make changes and need to recompile, just stop the debugger and repeat steps 3-6.
 
 > NOTE: If you stop the debugger at any point and wish to start debugging again without recompiling, you can easily re-attach to the existing container just with step 5.  However, since the app was already running, you will not be able to debug the initialization of the app again.
+
+
+## Available VS Code Tasks
+Tasks are executed thrugh the VS Code command palette (Mac: [⌘] + [P], Windows: [CTRL] + [P]).  Once you have opened the command palette, type task followed by whitespace and then any of the commands listed below:
+
+### composeForDebug
+As shown in the previous section the `composeForDebug` command will not only build the image from the Dockerfile.debug file, but will also start the containers so they can be debugged.
+
+Usage: From the command palette, provide `task composeForDebug`. 
+
+### stop
+The `stop` command will stop all of the running containers using `docker-compose stop`.
+
+Usage: From the command palette, provide `task stop`.
+
+### down
+Similar to the `stop` command, the `down` command will also stop the running containers.  In addition, it will also remove the containers.
+
+Usage: From the command palette, provide `task down`.
+
+### startDebugging
+The `startDebugging` command is similar to the `composeForDebug` comman in that it starts the containers in debugging mode (REMOTE_DEBUGGING=1).  The difference between the two commands is that `startDebugging` does not attempt to recompile the base image.
+
+Thus, `startDebugging` should only be used if you a) restarted Docker and the containers didn't start afterward or b) previously submitted either a `stop` or `down` task.
+
+Usage: From the command palette, provide `task startDebugging`.
