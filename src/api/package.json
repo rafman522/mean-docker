@@ -1,5 +1,5 @@
 {
-  "name": "mean-docker-example",
+  "name": "device-api",
   "private": true,
   "version": "0.0.1",
   "description": "Example code for creating a MEAN stack application hosted in docker.",
