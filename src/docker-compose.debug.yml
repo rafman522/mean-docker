@@ -4,8 +4,8 @@ services:
   deviceapi:
     image: deviceapi:debug
     build:
-      context: .
-      dockerfile: Dockerfile.debug
+      context: ./api
+      dockerfile: dockerfile.debug
     ports:
       - "8080:8080"
       - "5858:5858"

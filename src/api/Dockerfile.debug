@@ -1,9 +1,10 @@
-FROM node
+FROM node:latest
 
 RUN npm install nodemon -g
 
-WORKDIR /src
-COPY . /src
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY . /usr/src/app
 RUN npm install
 
 EXPOSE 8080

@@ -5,7 +5,7 @@ Reference architecture for creating a MEAN application and hosting in Docker and
 This reference architecture was implemented using docker for windows but should work anywhere.
 
 # Required:
-* Any text editor, I've just been opening files in VS since I already have it installed.
+* [VS Code](https://code.visualstudio.com/)
 * [Docker (latest)](https://www.docker.com/) 
 
 ## Optional (To run without docker)
@@ -28,6 +28,11 @@ To run the application use the 'up' command.
 > NOTE: There are some issues with Docker 1.12.0-rc3  use the command docker-compose up -d to start the containers.
 
 Browse to http://{Docker-IP-Address}:{Port}/api/devices
+
+## Validating that the services are up
+You can browse using from any browser to http://localhost:8080/api/devices of if your using a bash shell use the curl command.
+
+> curl --head http://localhost:8080/api/devices
 
 # Debugging with VS Code
 Debugging support in VS Code was implemented using [Yeaoman](http://yeoman.io) and [generator-docker](https://github.com/Microsoft/generator-docker).

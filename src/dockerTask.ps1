@@ -105,6 +105,7 @@ function Compose () {
         Write-Host "Running compose file $composeFileName"
         docker-compose -f $composeFileName -p $projectName kill
         docker-compose -f $composeFileName -p $projectName up -d
+        Write-Host "Compose has completed!"
     }
     else {
         Write-Error -Message "$Environment is not a valid parameter. File '$dockerFileName' does not exist." -Category InvalidArgument
@@ -170,8 +171,9 @@ $Environment = $Environment.ToLowerInvariant()
 
 # Call the correct function for the parameter that was used
 if($Compose) {
+    BuildImage
     Compose
-    OpenSite
+    # OpenSite
 }
 elseif($ComposeForDebug) {
     $env:REMOTE_DEBUGGING = 1

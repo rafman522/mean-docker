@@ -10,8 +10,8 @@
             "restart": true,
             "sourceMaps": false,
             "outDir": null,
-            "localRoot": "${workspaceRoot}/src",
-            "remoteRoot": "/src",
+            "localRoot": "${workspaceRoot}/src/api",
+            "remoteRoot": "/usr/src/app",
             "timeout": 10000
         }
     ]

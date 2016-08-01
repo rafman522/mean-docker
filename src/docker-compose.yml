@@ -2,8 +2,7 @@ version: '2'
 services:
     deviceapi:
         container_name: "device-api"
-        build: .
-        command: npm start
+        build: ./api
         ports:
         - "8080:8080"
         links:
