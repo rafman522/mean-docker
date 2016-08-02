@@ -1,0 +1,8 @@
+<div>
+    <h2>Registered Devices</h2>
+    <ul class="devices">
+        <li *ngFor="#device of devices">
+            <span class="badge">{{device._id}}</span> {{device.name}} | {{device.uri}}
+        </li>
+    </ul>
+</div>

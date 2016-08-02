@@ -1,5 +1,9 @@
 {
   "files.associations": {
     "dockerfile.*": "dockerfile"
+  },
+  "files.exclude": {
+    "**/web/app/**/*.map": true,
+    "**/web/app/**/*.js": true
   }
 }

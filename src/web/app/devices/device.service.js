@@ -1,4 +1,4 @@
-System.register(['@angular/core', './devices/devices.component', './devices/device.service'], function(exports_1, context_1) {
+System.register(['@angular/core', './mock-devices'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,37 +10,34 @@ System.register(['@angular/core', './devices/devices.component', './devices/devi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, devices_component_1, device_service_1;
-    var AppComponent;
+    var core_1, mock_devices_1;
+    var DeviceService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (devices_component_1_1) {
-                devices_component_1 = devices_component_1_1;
-            },
-            function (device_service_1_1) {
-                device_service_1 = device_service_1_1;
+            function (mock_devices_1_1) {
+                mock_devices_1 = mock_devices_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent() {
-                    this.title = "IoT Device Manager";
+            DeviceService = (function () {
+                function DeviceService() {
                 }
-                AppComponent = __decorate([
-                    core_1.Component({
-                        selector: 'device-app',
-                        templateUrl: './app/app.component.html',
-                        directives: [devices_component_1.DevicesComponent],
-                        providers: [device_service_1.DeviceService]
-                    }), 
+                DeviceService.prototype.getDevices = function () {
+                    return Promise.resolve(mock_devices_1.DEVICES);
+                };
+                DeviceService.prototype.getDevice = function (id) {
+                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) { return devices.filter(function (device) { return device._id === id; })[0]; });
+                };
+                DeviceService = __decorate([
+                    core_1.Injectable(), 
                     __metadata('design:paramtypes', [])
-                ], AppComponent);
-                return AppComponent;
+                ], DeviceService);
+                return DeviceService;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("DeviceService", DeviceService);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=device.service.js.map
