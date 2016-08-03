@@ -16,8 +16,9 @@ services:
         image: mongo:latest
         volumes:
         - device-data:/data/db
-    nginx:
-        image: nginx:latest
+    deviceweb:
+        container_name: "device-web"
+        build: ./web
         ports:
         - "80:80"
         - "443:443"

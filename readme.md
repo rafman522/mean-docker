@@ -25,8 +25,6 @@ To run the application use the 'up' command.
 
 > docker-compose up
 
-> NOTE: There are some issues with Docker 1.12.0-rc3  use the command docker-compose up -d to start the containers.
-
 Browse to http://{Docker-IP-Address}:{Port}/api/devices
 
 ## Validating that the services are up
@@ -79,3 +77,16 @@ The `startDebugging` command is similar to the `composeForDebug` comman in that 
 Thus, `startDebugging` should only be used if you a) restarted Docker and the containers didn't start afterward or b) previously submitted either a `stop` or `down` task.
 
 Usage: From the command palette, provide `task startDebugging`.
+
+# Useful docker commands using bash shell
+Clean up docker containers, replace the grep search with something more specific to your scenario.
+
+> docker ps -a | grep 'weeks ago' | awk '{print $1}' | xargs --no-run-if-empty docker rm
+
+Clean up docker images, replace the grep search with something more specific to your scenario.
+
+> docker images | grep "<none>" | awk '{print $3}' | xargs docker rmi
+
+Clean up docker volumes, removes all dangling (not currently attached) volumes so use this command sparingly 
+
+> docker volume ls -f dangling=true | awk '{print $2}' | xargs -r docker volume rm
