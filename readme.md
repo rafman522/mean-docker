@@ -15,7 +15,17 @@ This reference architecture was implemented using docker for windows but should 
 # Building the Project
 To build the project you will use 'docker-compose'.
 
-Open a terminal, I like to use the bash shell that comes with git, and cd to the src folder for the repository.  The type -
+Open a terminal, I like to use the bash shell that comes with git, and cd to the src folder for the repository.  Then build the web project.
+
+> cd web
+>
+> npm install
+>
+> tsc
+>
+> cd ..
+
+After which you can run docker-compose to build the docker containers.
 
 > docker-compose build
 
