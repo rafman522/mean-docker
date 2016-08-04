@@ -11,7 +11,6 @@ import { DeviceService } from './device.service';
 })
 export class DevicesComponent implements OnInit {
     devices: Device[];
-    selectedDevice: Device;
 
     constructor(
         private router: Router,
@@ -26,12 +25,11 @@ export class DevicesComponent implements OnInit {
         this.getDevices();
     }
 
-    onSelect(device: Device) {
-        this.selectedDevice = device;
-        this.gotoDetail();
+    gotoDetail(device: Device) {
+        this.router.navigate(['/detail', device._id]);
     }
 
-    gotoDetail() {
-        this.router.navigate(['/detail', this.selectedDevice._id]);
+    gotoAddNewDevice() {
+        this.router.navigate(['/add']);
     }
 }

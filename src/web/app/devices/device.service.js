@@ -30,6 +30,20 @@ System.register(['@angular/core', './mock-devices'], function(exports_1, context
                 DeviceService.prototype.getDevice = function (id) {
                     return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) { return devices.filter(function (device) { return device._id === id; })[0]; });
                 };
+                DeviceService.prototype.addDevice = function (device) {
+                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) {
+                        device._id = devices[devices.length - 1]._id + 1;
+                        devices.push(device);
+                        return device;
+                    });
+                };
+                DeviceService.prototype.updateDevice = function (device) {
+                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) {
+                        var temp = devices.filter(function (device) { return device._id === device._id; })[0];
+                        temp.name = device.name;
+                        temp.uri = device.uri;
+                    });
+                };
                 DeviceService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])

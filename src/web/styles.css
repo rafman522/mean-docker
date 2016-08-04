@@ -1,7 +1,12 @@
 h1 {
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: #999;
   margin-bottom: 0;
+}
+h2 {
+  font-size: 1.22em;
+  margin-top: #977;
+  padding-top: 0;
 }
 body {
   margin: 2em;

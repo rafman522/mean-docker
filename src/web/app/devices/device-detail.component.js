@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, device_service_1;
+    var core_1, router_1, router_2, device_service_1;
     var DeviceDetailComponent;
     return {
         setters:[
@@ -19,26 +19,43 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+                router_2 = router_1_1;
             },
             function (device_service_1_1) {
                 device_service_1 = device_service_1_1;
             }],
         execute: function() {
             DeviceDetailComponent = (function () {
-                function DeviceDetailComponent(deviceService, route) {
+                function DeviceDetailComponent(router, deviceService, route) {
+                    this.router = router;
                     this.deviceService = deviceService;
                     this.route = route;
+                    this.edit = false;
                 }
                 DeviceDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.sub = this.route.params.subscribe(function (params) {
                         var id = +params['id'];
                         _this.deviceService.getDevice(id)
-                            .then(function (device) { return _this.device = device; });
+                            .then(function (device) { return _this.device = { _id: device._id, name: device.name, uri: device.uri }; });
                     });
                 };
                 DeviceDetailComponent.prototype.ngOnDestroy = function () {
                     this.sub.unsubscribe();
+                };
+                DeviceDetailComponent.prototype.editDevice = function () {
+                    this.edit = true;
+                };
+                DeviceDetailComponent.prototype.cancel = function () {
+                    this.edit = false;
+                };
+                DeviceDetailComponent.prototype.save = function () {
+                    var _this = this;
+                    this.deviceService.updateDevice(this.device)
+                        .then(function (ignore) { return _this.edit = false; });
+                };
+                DeviceDetailComponent.prototype.back = function () {
+                    this.router.navigate(['/devices']);
                 };
                 DeviceDetailComponent = __decorate([
                     core_1.Component({
@@ -46,7 +63,7 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                         templateUrl: 'app/devices/device-detail.component.html',
                         styleUrls: ['app/devices/device-detail.component.css']
                     }), 
-                    __metadata('design:paramtypes', [device_service_1.DeviceService, router_1.ActivatedRoute])
+                    __metadata('design:paramtypes', [router_1.Router, device_service_1.DeviceService, router_2.ActivatedRoute])
                 ], DeviceDetailComponent);
                 return DeviceDetailComponent;
             }());

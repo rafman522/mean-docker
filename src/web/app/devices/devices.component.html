@@ -1,8 +1,12 @@
 <h2>Registered Devices</h2>
-<ul class="devices">
-    <li *ngFor="let device of devices"
-        [class.selected]="device === selectedDevice"
-        (click)="onSelect(device)">
-        <span class="badge">{{device._id}}</span> {{device.name}} | {{device.uri}}
-    </li>
-</ul>
+<div class="grid grid-pad">
+    <div *ngFor="let device of devices" (click)="gotoDetail(device)" class='col-1-4'>
+        <div class="module device">
+            <h4>{{device.name}}</h4>
+            {{device.uri}}
+        </div>
+    </div>
+</div>
+<div class="actions">
+    <button (click)="gotoAddNewDevice()">Add New Device</button>
+</div>

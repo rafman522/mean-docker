@@ -10,8 +10,8 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, device_service_1;
-    var DevicesComponent;
+    var core_1, router_1, router_2, device_service_1;
+    var AddDeviceComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -19,42 +19,47 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+                router_2 = router_1_1;
             },
             function (device_service_1_1) {
                 device_service_1 = device_service_1_1;
             }],
         execute: function() {
-            DevicesComponent = (function () {
-                function DevicesComponent(router, deviceService) {
+            AddDeviceComponent = (function () {
+                function AddDeviceComponent(router, deviceService, route) {
                     this.router = router;
                     this.deviceService = deviceService;
+                    this.route = route;
+                    this.device = { _id: 0, name: '', uri: '' };
                 }
-                DevicesComponent.prototype.getDevices = function () {
+                AddDeviceComponent.prototype.addDevice = function (device) {
                     var _this = this;
-                    this.deviceService.getDevices()
-                        .then(function (devices) { return _this.devices = devices; });
+                    if (device.name !== '' || device.uri !== '') {
+                        this.deviceService.addDevice(device)
+                            .then(function (device) {
+                            _this.device = device;
+                            _this.router.navigate(["/devices"]);
+                        });
+                    }
+                    else {
+                        this.validation = "Name and Uri are required.";
+                    }
                 };
-                DevicesComponent.prototype.ngOnInit = function () {
-                    this.getDevices();
+                AddDeviceComponent.prototype.cancel = function () {
+                    this.router.navigate(["/devices"]);
                 };
-                DevicesComponent.prototype.gotoDetail = function (device) {
-                    this.router.navigate(['/detail', device._id]);
-                };
-                DevicesComponent.prototype.gotoAddNewDevice = function () {
-                    this.router.navigate(['/add']);
-                };
-                DevicesComponent = __decorate([
+                AddDeviceComponent = __decorate([
                     core_1.Component({
-                        selector: 'registered-devices',
-                        templateUrl: 'app/devices/devices.component.html',
-                        styleUrls: ['app/devices/devices.component.css']
+                        selector: 'add-device',
+                        templateUrl: 'app/devices/add-device.component.html',
+                        styleUrls: ['app/devices/add-device.component.css']
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router, device_service_1.DeviceService])
-                ], DevicesComponent);
-                return DevicesComponent;
+                    __metadata('design:paramtypes', [router_1.Router, device_service_1.DeviceService, router_2.ActivatedRoute])
+                ], AddDeviceComponent);
+                return AddDeviceComponent;
             }());
-            exports_1("DevicesComponent", DevicesComponent);
+            exports_1("AddDeviceComponent", AddDeviceComponent);
         }
     }
 });
-//# sourceMappingURL=devices.component.js.map
+//# sourceMappingURL=add-device.component.js.map

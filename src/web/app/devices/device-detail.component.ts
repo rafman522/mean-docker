@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 import { Device } from './device';
@@ -12,12 +13,14 @@ import { DeviceService } from './device.service';
 export class DeviceDetailComponent implements OnInit, OnDestroy {
     device: Device;
     sub: any;
+    edit: Boolean;
     
     constructor(
+        private router: Router,
         private deviceService: DeviceService,
         private route: ActivatedRoute
     ) {
-
+        this.edit = false;
     }
 
     ngOnInit() {
@@ -25,12 +28,29 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
             params => {
                 let id = +params['id'];
                 this.deviceService.getDevice(id)
-                    .then(device => this.device = device);
+                    .then(device => this.device = { _id: device._id, name: device.name, uri: device.uri });
             }
         )  
     }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
+    }
+
+    editDevice() {
+        this.edit = true;
+    }
+
+    cancel() {
+        this.edit = false;
+    }
+
+    save() {
+        this.deviceService.updateDevice(this.device)
+            .then(ignore => this.edit = false)
+    }
+
+    back() {
+        this.router.navigate(['/devices']);
     }
 }

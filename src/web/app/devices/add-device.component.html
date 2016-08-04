@@ -1,0 +1,16 @@
+<div>
+    <h2>Add new device {{device.name}}.</h2>
+    <div *ngIf="validation" class='error'>{{validation}}</div>
+    <div>
+        <label>Name: </label>
+        <input [(ngModel)]="device.name" placeholder="name" />
+    </div>
+    <div>
+        <label>Uri: </label>
+        <input [(ngModel)]="device.uri" placeholder="uri://devicename" />
+    </div>
+    <div>
+        <button (click)="addDevice(device)">Add</button>
+        <button (click)="cancel()">Cancel</button>
+    </div>
+</div>

@@ -2,6 +2,7 @@ import { provideRouter, RouterConfig }  from '@angular/router';
 
 import { DevicesComponent } from './devices/devices.component';
 import { DeviceDetailComponent } from './devices/device-detail.component';
+import { AddDeviceComponent } from './devices/add-device.component';
 
 const routes: RouterConfig = [
   {
@@ -16,6 +17,10 @@ const routes: RouterConfig = [
   {
     path: 'devices',
     component: DevicesComponent
+  },
+  {
+    path: 'add',
+    component: AddDeviceComponent
   }
 ];
 

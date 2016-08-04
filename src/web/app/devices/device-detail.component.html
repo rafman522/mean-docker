@@ -2,11 +2,27 @@
     <h2>{{device.name}} details</h2>
     <div><label>Id: </label>{{device._id}}</div>
     <div>
-        <label>Name: </label>
-        <input [(ngModel)]="device.name" placeholder="name" />
+        <div *ngIf="!edit">
+            <label>Name: </label> {{device.name}}
+        </div>
+        <div *ngIf="edit">
+            <label>Name: </label>
+            <input [(ngModel)]="device.name" placeholder="name" />
+        </div>
     </div>
     <div>
-        <label>Uri: </label>
-        <input [(ngModel)]="device.uri" placeholder="uri://devicename" />
+        <div *ngIf="!edit">
+            <label>Uri: </label> {{device.uri}}
+        </div>
+        <div *ngIf="edit">
+            <label>Uri: </label>
+            <input *ngIf="edit" [(ngModel)]="device.uri" placeholder="uri://devicename" />
+        </div>
+    </div>
+    <div>
+        <button *ngIf="edit" (click)="save()">Save</button>
+        <button *ngIf="edit" (click)="cancel()">Cancel</button>
+        <button *ngIf="!edit" (click)="editDevice()">Edit</button>
+        <button *ngIf="!edit" (click)="back()">Back</button>
     </div>
 </div>
