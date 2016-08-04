@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Device } from './device';
 import { DeviceService } from './device.service';
@@ -13,13 +14,24 @@ export class DevicesComponent implements OnInit {
     selectedDevice: Device;
 
     constructor(
+        private router: Router,
         private deviceService: DeviceService) { }
 
     getDevices() {
-        this.deviceService.getDevices().then(devices => this.devices = devices);
+        this.deviceService.getDevices()
+            .then(devices => this.devices = devices);
     }
 
     ngOnInit() {
         this.getDevices();
+    }
+
+    onSelect(device: Device) {
+        this.selectedDevice = device;
+        this.gotoDetail();
+    }
+
+    gotoDetail() {
+        this.router.navigate(['/detail', this.selectedDevice._id]);
     }
 }

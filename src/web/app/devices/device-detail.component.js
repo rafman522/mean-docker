@@ -11,7 +11,7 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1, device_service_1;
-    var DevicesComponent;
+    var DeviceDetailComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -24,38 +24,34 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                 device_service_1 = device_service_1_1;
             }],
         execute: function() {
-            DevicesComponent = (function () {
-                function DevicesComponent(router, deviceService) {
-                    this.router = router;
+            DeviceDetailComponent = (function () {
+                function DeviceDetailComponent(deviceService, route) {
                     this.deviceService = deviceService;
+                    this.route = route;
                 }
-                DevicesComponent.prototype.getDevices = function () {
+                DeviceDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.deviceService.getDevices()
-                        .then(function (devices) { return _this.devices = devices; });
+                    this.sub = this.route.params.subscribe(function (params) {
+                        var id = +params['id'];
+                        _this.deviceService.getDevice(id)
+                            .then(function (device) { return _this.device = device; });
+                    });
                 };
-                DevicesComponent.prototype.ngOnInit = function () {
-                    this.getDevices();
+                DeviceDetailComponent.prototype.ngOnDestroy = function () {
+                    this.sub.unsubscribe();
                 };
-                DevicesComponent.prototype.onSelect = function (device) {
-                    this.selectedDevice = device;
-                    this.gotoDetail();
-                };
-                DevicesComponent.prototype.gotoDetail = function () {
-                    this.router.navigate(['/detail', this.selectedDevice._id]);
-                };
-                DevicesComponent = __decorate([
+                DeviceDetailComponent = __decorate([
                     core_1.Component({
-                        selector: 'registered-devices',
-                        templateUrl: 'app/devices/devices.component.html',
-                        styleUrls: ['app/devices/devices.component.css']
+                        selector: 'device-detail',
+                        templateUrl: 'app/devices/device-detail.component.html',
+                        styleUrls: ['app/devices/device-detail.component.css']
                     }), 
-                    __metadata('design:paramtypes', [router_1.Router, device_service_1.DeviceService])
-                ], DevicesComponent);
-                return DevicesComponent;
+                    __metadata('design:paramtypes', [device_service_1.DeviceService, router_1.ActivatedRoute])
+                ], DeviceDetailComponent);
+                return DeviceDetailComponent;
             }());
-            exports_1("DevicesComponent", DevicesComponent);
+            exports_1("DeviceDetailComponent", DeviceDetailComponent);
         }
     }
 });
-//# sourceMappingURL=devices.component.js.map
+//# sourceMappingURL=device-detail.component.js.map

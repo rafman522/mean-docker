@@ -1,0 +1,12 @@
+<div *ngIf="device">
+    <h2>{{device.name}} details</h2>
+    <div><label>Id: </label>{{device._id}}</div>
+    <div>
+        <label>Name: </label>
+        <input [(ngModel)]="device.name" placeholder="name" />
+    </div>
+    <div>
+        <label>Uri: </label>
+        <input [(ngModel)]="device.uri" placeholder="uri://devicename" />
+    </div>
+</div>
