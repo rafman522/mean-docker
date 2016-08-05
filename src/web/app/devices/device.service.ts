@@ -18,7 +18,11 @@ export class DeviceService {
     addDevice(device: Device) {
         return Promise.resolve(DEVICES).then(
             devices => {
-                device._id = devices[devices.length-1]._id + 1;
+                if(devices.length === 0) {
+                    device._id = 1;
+                } else {
+                    device._id = devices[devices.length-1]._id + 1;
+                }
                 devices.push(device);
                 return device;
             });
@@ -31,5 +35,12 @@ export class DeviceService {
                 temp.name = device.name;
                 temp.uri = device.uri;
             });
+    }
+
+    removeDevice(device: Device) {
+        return Promise.resolve(DEVICES).then(
+            devices => {
+                devices.splice(devices.findIndex(d => d._id === device._id), 1);
+             });
     }
 }

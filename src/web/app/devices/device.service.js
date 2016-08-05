@@ -32,7 +32,12 @@ System.register(['@angular/core', './mock-devices'], function(exports_1, context
                 };
                 DeviceService.prototype.addDevice = function (device) {
                     return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) {
-                        device._id = devices[devices.length - 1]._id + 1;
+                        if (devices.length === 0) {
+                            device._id = 1;
+                        }
+                        else {
+                            device._id = devices[devices.length - 1]._id + 1;
+                        }
                         devices.push(device);
                         return device;
                     });
@@ -42,6 +47,11 @@ System.register(['@angular/core', './mock-devices'], function(exports_1, context
                         var temp = devices.filter(function (device) { return device._id === device._id; })[0];
                         temp.name = device.name;
                         temp.uri = device.uri;
+                    });
+                };
+                DeviceService.prototype.removeDevice = function (device) {
+                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) {
+                        devices.splice(devices.findIndex(function (d) { return d._id === device._id; }), 1);
                     });
                 };
                 DeviceService = __decorate([

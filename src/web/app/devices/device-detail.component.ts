@@ -13,14 +13,14 @@ import { DeviceService } from './device.service';
 export class DeviceDetailComponent implements OnInit, OnDestroy {
     device: Device;
     sub: any;
-    edit: Boolean;
+    editEnabled: Boolean;
     
     constructor(
         private router: Router,
         private deviceService: DeviceService,
         private route: ActivatedRoute
     ) {
-        this.edit = false;
+        this.editEnabled = false;
     }
 
     ngOnInit() {
@@ -37,17 +37,26 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    editDevice() {
-        this.edit = true;
+    enableEdit() {
+        this.editEnabled = true;
+    }
+
+    disableEdit() {
+        this.editEnabled = false
     }
 
     cancel() {
-        this.edit = false;
+        this.editEnabled = false;
+    }
+
+    remove() {
+        this.deviceService.removeDevice(this.device)
+            .then(ignore => this.back())
     }
 
     save() {
         this.deviceService.updateDevice(this.device)
-            .then(ignore => this.edit = false)
+            .then(ignore => this.disableEdit())
     }
 
     back() {

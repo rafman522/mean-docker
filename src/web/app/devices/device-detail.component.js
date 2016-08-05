@@ -30,7 +30,7 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                     this.router = router;
                     this.deviceService = deviceService;
                     this.route = route;
-                    this.edit = false;
+                    this.editEnabled = false;
                 }
                 DeviceDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -43,16 +43,24 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                 DeviceDetailComponent.prototype.ngOnDestroy = function () {
                     this.sub.unsubscribe();
                 };
-                DeviceDetailComponent.prototype.editDevice = function () {
-                    this.edit = true;
+                DeviceDetailComponent.prototype.enableEdit = function () {
+                    this.editEnabled = true;
+                };
+                DeviceDetailComponent.prototype.disableEdit = function () {
+                    this.editEnabled = false;
                 };
                 DeviceDetailComponent.prototype.cancel = function () {
-                    this.edit = false;
+                    this.editEnabled = false;
+                };
+                DeviceDetailComponent.prototype.remove = function () {
+                    var _this = this;
+                    this.deviceService.removeDevice(this.device)
+                        .then(function (ignore) { return _this.back(); });
                 };
                 DeviceDetailComponent.prototype.save = function () {
                     var _this = this;
                     this.deviceService.updateDevice(this.device)
-                        .then(function (ignore) { return _this.edit = false; });
+                        .then(function (ignore) { return _this.disableEdit(); });
                 };
                 DeviceDetailComponent.prototype.back = function () {
                     this.router.navigate(['/devices']);

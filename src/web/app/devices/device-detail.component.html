@@ -20,9 +20,14 @@
         </div>
     </div>
     <div>
-        <button *ngIf="edit" (click)="save()">Save</button>
-        <button *ngIf="edit" (click)="cancel()">Cancel</button>
-        <button *ngIf="!edit" (click)="editDevice()">Edit</button>
-        <button *ngIf="!edit" (click)="back()">Back</button>
+        <div *ngIf="edit">
+            <button (click)="save()">Save</button>
+            <button (click)="cancel()">Cancel</button>
+        </div>
+        <div *ngIf="!edit">
+            <button (click)="enableEdit()">Edit</button>
+            <button (click)="remove()">Remove</button>
+            <button (click)="back()">Back</button>
+        </div>
     </div>
 </div>
