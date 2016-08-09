@@ -31,14 +31,15 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                 }
                 DevicesComponent.prototype.getDevices = function () {
                     var _this = this;
+                    this.errorMessage = null;
                     this.deviceService.getDevices()
-                        .then(function (devices) { return _this.devices = devices; });
+                        .subscribe(function (devices) { return _this.devices = devices; }, function (error) { return _this.errorMessage = error; });
                 };
                 DevicesComponent.prototype.ngOnInit = function () {
                     this.getDevices();
                 };
                 DevicesComponent.prototype.gotoDetail = function (device) {
-                    this.router.navigate(['/detail', device._id]);
+                    this.router.navigate(['/detail', device.id]);
                 };
                 DevicesComponent.prototype.gotoAddNewDevice = function () {
                     this.router.navigate(['/add']);

@@ -1,46 +1,67 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http'
 
 import { Device } from './device';
-import { DEVICES } from './mock-devices';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DeviceService {
-    getDevices() {
-        return Promise.resolve(DEVICES);
+    private devicesUrl = 'app/devices';
+
+    constructor(private http: Http) {}
+
+    getDevices(): Observable<Device[]> {
+        return this.http.get(this.devicesUrl)
+                        .map(this.extractData)
+                        .catch(this.handleError);
     }
 
-    getDevice(id: number) {
-        return Promise.resolve(DEVICES).then(
-            devices => devices.filter(device => device._id === id)[0]
-        );
+    getDevice(id: number): Observable<Device> {
+        return this.http.get(this.devicesUrl + "/" + id)
+                        .map(this.extractData)
+                        .catch(this.handleError);
     }
 
-    addDevice(device: Device) {
-        return Promise.resolve(DEVICES).then(
-            devices => {
-                if(devices.length === 0) {
-                    device._id = 1;
-                } else {
-                    device._id = devices[devices.length-1]._id + 1;
-                }
-                devices.push(device);
-                return device;
-            });
+    addDevice(device: Device): Observable<Device> {
+        let body = JSON.stringify(device);
+        let headers = new Headers({ 'content-type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.devicesUrl, body, options)
+                        .map(this.extractData)
+                        .catch(this.handleError);
     }
 
     updateDevice(device: Device) {
-        return Promise.resolve(DEVICES).then(
-            devices => {
-                var temp = devices.filter(device => device._id === device._id)[0]
-                temp.name = device.name;
-                temp.uri = device.uri;
-            });
+        let body = JSON.stringify(device);
+        let headers = new Headers({ 'content-type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(this.devicesUrl + "/" + device.id, body, options)
+                        .map(this.extractData)
+                        .catch(this.handleError);
     }
 
     removeDevice(device: Device) {
-        return Promise.resolve(DEVICES).then(
-            devices => {
-                devices.splice(devices.findIndex(d => d._id === device._id), 1);
-             });
+        return this.http.delete(this.devicesUrl + "/" + device.id)
+                        .map(this.extractData)
+                        .catch(this.handleError);
+    }
+
+    extractData(response: Response) {
+        if(response.status === 204) { //No Content
+            return { };
+        }
+        
+        let body = response.json();
+        return body.data || { };
+    }
+
+    handleError(error: any) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
     }
 }

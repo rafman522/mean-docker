@@ -11,14 +11,18 @@ import { DeviceService } from './device.service';
 })
 export class DevicesComponent implements OnInit {
     devices: Device[];
+    errorMessage: string;
 
     constructor(
         private router: Router,
         private deviceService: DeviceService) { }
 
     getDevices() {
+        this.errorMessage = null;
         this.deviceService.getDevices()
-            .then(devices => this.devices = devices);
+            .subscribe(
+                devices => this.devices = devices,
+                error => this.errorMessage = <any>error);
     }
 
     ngOnInit() {
@@ -26,7 +30,7 @@ export class DevicesComponent implements OnInit {
     }
 
     gotoDetail(device: Device) {
-        this.router.navigate(['/detail', device._id]);
+        this.router.navigate(['/detail', device.id]);
     }
 
     gotoAddNewDevice() {

@@ -14,7 +14,7 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
     device: Device;
     sub: any;
     editEnabled: Boolean;
-    
+
     constructor(
         private router: Router,
         private deviceService: DeviceService,
@@ -27,14 +27,19 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
         this.sub = this.route.params.subscribe(
             params => {
                 let id = +params['id'];
-                this.deviceService.getDevice(id)
-                    .then(device => this.device = { _id: device._id, name: device.name, uri: device.uri });
+                this.getDevice(id);
             }
-        )  
+        );
     }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
+    }
+
+    getDevice(id: number) {
+        this.deviceService.getDevice(id)
+            .subscribe(
+            device => this.device = device);
     }
 
     enableEdit() {
@@ -51,12 +56,16 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
 
     remove() {
         this.deviceService.removeDevice(this.device)
-            .then(ignore => this.back())
+            .subscribe(ignore => this.back());
     }
 
     save() {
+        let id = this.device.id;
         this.deviceService.updateDevice(this.device)
-            .then(ignore => this.disableEdit())
+            .subscribe(device => {
+                this.getDevice(id);
+                this.disableEdit();
+            });
     }
 
     back() {

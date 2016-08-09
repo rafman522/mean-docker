@@ -30,16 +30,17 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                     this.router = router;
                     this.deviceService = deviceService;
                     this.route = route;
-                    this.device = { _id: 0, name: '', uri: '' };
+                    this.device = { id: 0, name: '', uri: '' };
                 }
                 AddDeviceComponent.prototype.addDevice = function (device) {
                     var _this = this;
                     if (device.name !== '' || device.uri !== '') {
                         this.deviceService.addDevice(device)
-                            .then(function (device) {
+                            .subscribe(function (device) {
+                            console.log(device);
                             _this.device = device;
-                            _this.router.navigate(["/devices"]);
                         });
+                        this.router.navigate(["/devices"]);
                     }
                     else {
                         this.validation = "Name and Uri are required.";

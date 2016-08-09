@@ -36,12 +36,16 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                     var _this = this;
                     this.sub = this.route.params.subscribe(function (params) {
                         var id = +params['id'];
-                        _this.deviceService.getDevice(id)
-                            .then(function (device) { return _this.device = { _id: device._id, name: device.name, uri: device.uri }; });
+                        _this.getDevice(id);
                     });
                 };
                 DeviceDetailComponent.prototype.ngOnDestroy = function () {
                     this.sub.unsubscribe();
+                };
+                DeviceDetailComponent.prototype.getDevice = function (id) {
+                    var _this = this;
+                    this.deviceService.getDevice(id)
+                        .subscribe(function (device) { return _this.device = device; });
                 };
                 DeviceDetailComponent.prototype.enableEdit = function () {
                     this.editEnabled = true;
@@ -55,12 +59,16 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                 DeviceDetailComponent.prototype.remove = function () {
                     var _this = this;
                     this.deviceService.removeDevice(this.device)
-                        .then(function (ignore) { return _this.back(); });
+                        .subscribe(function (ignore) { return _this.back(); });
                 };
                 DeviceDetailComponent.prototype.save = function () {
                     var _this = this;
+                    var id = this.device.id;
                     this.deviceService.updateDevice(this.device)
-                        .then(function (ignore) { return _this.disableEdit(); });
+                        .subscribe(function (device) {
+                        _this.getDevice(id);
+                        _this.disableEdit();
+                    });
                 };
                 DeviceDetailComponent.prototype.back = function () {
                     this.router.navigate(['/devices']);

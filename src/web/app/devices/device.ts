@@ -1,5 +1,5 @@
 export class Device {
-    _id: number;
+    id: number;
     uri: string;
     name: string;
 }

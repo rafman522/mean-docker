@@ -1,12 +1,23 @@
-<h2>Registered Devices</h2>
-<div class="grid grid-pad">
-    <div *ngFor="let device of devices" (click)="gotoDetail(device)" class='col-1-4'>
-        <div class="module device">
-            <h4>{{device.name}}</h4>
-            {{device.uri}}
-        </div>
+<div *ngIf="errorMessage">
+    <div class="error">
+        <h4>Error loading the devices!</h4>
+        {{errorMessage}}
+    </div>
+    <div class="actions">
+        <button (click)="getDevices()">Try again!</button>
     </div>
 </div>
-<div class="actions">
-    <button (click)="gotoAddNewDevice()">Add New Device</button>
+<div *ngIf="!errorMessage">
+    <h2>Registered Devices</h2>
+    <div class="grid grid-pad">
+        <div *ngFor="let device of devices" (click)="gotoDetail(device)" class='col-1-4'>
+            <div class="module device">
+                <h4>{{device.name}}</h4>
+                {{device.uri}}
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button (click)="gotoAddNewDevice()">Add New Device</button>
+    </div>
 </div>

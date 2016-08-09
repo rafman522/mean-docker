@@ -19,16 +19,19 @@ export class AddDeviceComponent {
         private deviceService: DeviceService,
         private route: ActivatedRoute
     ) {
-        this.device = { _id: 0, name: '', uri: '' };
+        this.device = { id: 0, name: '', uri: '' };
      }
 
     addDevice(device: Device) {
         if(device.name !== '' || device.uri !== '') {
             this.deviceService.addDevice(device)
-                .then(device => {
-                    this.device = device; 
-                    this.router.navigate(["/devices"]);
-                });
+                .subscribe(
+                    device => {
+                        console.log(device);
+                        this.device = device;
+                    }); 
+            
+            this.router.navigate(["/devices"]);
         } else {
             this.validation = "Name and Uri are required.";
         }

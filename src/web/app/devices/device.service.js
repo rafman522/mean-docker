@@ -1,4 +1,4 @@
-System.register(['@angular/core', './mock-devices'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,53 +10,73 @@ System.register(['@angular/core', './mock-devices'], function(exports_1, context
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, mock_devices_1;
+    var core_1, http_1, http_2, Observable_1;
     var DeviceService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (mock_devices_1_1) {
-                mock_devices_1 = mock_devices_1_1;
+            function (http_1_1) {
+                http_1 = http_1_1;
+                http_2 = http_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             DeviceService = (function () {
-                function DeviceService() {
+                function DeviceService(http) {
+                    this.http = http;
+                    this.devicesUrl = 'app/devices';
                 }
                 DeviceService.prototype.getDevices = function () {
-                    return Promise.resolve(mock_devices_1.DEVICES);
+                    return this.http.get(this.devicesUrl)
+                        .map(this.extractData)
+                        .catch(this.handleError);
                 };
                 DeviceService.prototype.getDevice = function (id) {
-                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) { return devices.filter(function (device) { return device._id === id; })[0]; });
+                    return this.http.get(this.devicesUrl + "/" + id)
+                        .map(this.extractData)
+                        .catch(this.handleError);
                 };
                 DeviceService.prototype.addDevice = function (device) {
-                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) {
-                        if (devices.length === 0) {
-                            device._id = 1;
-                        }
-                        else {
-                            device._id = devices[devices.length - 1]._id + 1;
-                        }
-                        devices.push(device);
-                        return device;
-                    });
+                    var body = JSON.stringify(device);
+                    var headers = new http_2.Headers({ 'content-type': 'application/json' });
+                    var options = new http_2.RequestOptions({ headers: headers });
+                    return this.http.post(this.devicesUrl, body, options)
+                        .map(this.extractData)
+                        .catch(this.handleError);
                 };
                 DeviceService.prototype.updateDevice = function (device) {
-                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) {
-                        var temp = devices.filter(function (device) { return device._id === device._id; })[0];
-                        temp.name = device.name;
-                        temp.uri = device.uri;
-                    });
+                    var body = JSON.stringify(device);
+                    var headers = new http_2.Headers({ 'content-type': 'application/json' });
+                    var options = new http_2.RequestOptions({ headers: headers });
+                    return this.http.put(this.devicesUrl + "/" + device.id, body, options)
+                        .map(this.extractData)
+                        .catch(this.handleError);
                 };
                 DeviceService.prototype.removeDevice = function (device) {
-                    return Promise.resolve(mock_devices_1.DEVICES).then(function (devices) {
-                        devices.splice(devices.findIndex(function (d) { return d._id === device._id; }), 1);
-                    });
+                    return this.http.delete(this.devicesUrl + "/" + device.id)
+                        .map(this.extractData)
+                        .catch(this.handleError);
+                };
+                DeviceService.prototype.extractData = function (response) {
+                    if (response.status === 204) {
+                        return {};
+                    }
+                    var body = response.json();
+                    return body.data || {};
+                };
+                DeviceService.prototype.handleError = function (error) {
+                    var errMsg = (error.message) ? error.message :
+                        error.status ? error.status + " - " + error.statusText : 'Server error';
+                    console.error(errMsg); // log to console instead
+                    return Observable_1.Observable.throw(errMsg);
                 };
                 DeviceService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [http_1.Http])
                 ], DeviceService);
                 return DeviceService;
             }());

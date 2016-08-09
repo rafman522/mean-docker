@@ -11,6 +11,9 @@ h2 {
 body {
   margin: 2em;
 }
+.error {
+  color:red;
+}
 
  /*
   * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
