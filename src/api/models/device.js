@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var schema = mongoose.Schema;
+var Mongoose = require('mongoose');
+var Schema = Mongoose.Schema;
 
-var deviceSchema = new schema({
+var deviceSchema = new Schema({
     uri: String,
     name: String,
 },
@@ -9,4 +9,16 @@ var deviceSchema = new schema({
     timestamps: { created: 'created', updated: 'updated' }
 });
 
-module.exports = mongoose.model('Device', deviceSchema);
+deviceSchema.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+
+deviceSchema.set('toJSON', { 
+    virtuals: true
+});
+
+deviceSchema.set('toObject', { 
+    virtuals: true
+});
+
+module.exports = Mongoose.model('Device', deviceSchema);
