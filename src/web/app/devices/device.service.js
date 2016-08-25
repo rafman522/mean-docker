@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, http_2, Observable_1;
+    var core_1, http_1, Observable_1;
     var DeviceService;
     return {
         setters:[
@@ -19,7 +19,6 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(
             },
             function (http_1_1) {
                 http_1 = http_1_1;
-                http_2 = http_1_1;
             },
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
@@ -28,7 +27,7 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(
             DeviceService = (function () {
                 function DeviceService(http) {
                     this.http = http;
-                    this.devicesUrl = 'app/devices';
+                    this.devicesUrl = 'http://localhost:8080/api/devices';
                 }
                 DeviceService.prototype.getDevices = function () {
                     return this.http.get(this.devicesUrl)
@@ -41,18 +40,12 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(
                         .catch(this.handleError);
                 };
                 DeviceService.prototype.addDevice = function (device) {
-                    var body = JSON.stringify(device);
-                    var headers = new http_2.Headers({ 'content-type': 'application/json' });
-                    var options = new http_2.RequestOptions({ headers: headers });
-                    return this.http.post(this.devicesUrl, body, options)
+                    return this.http.post(this.devicesUrl, device)
                         .map(this.extractData)
                         .catch(this.handleError);
                 };
                 DeviceService.prototype.updateDevice = function (device) {
-                    var body = JSON.stringify(device);
-                    var headers = new http_2.Headers({ 'content-type': 'application/json' });
-                    var options = new http_2.RequestOptions({ headers: headers });
-                    return this.http.put(this.devicesUrl + "/" + device.id, body, options)
+                    return this.http.put(this.devicesUrl + "/" + device.id, device)
                         .map(this.extractData)
                         .catch(this.handleError);
                 };
@@ -65,8 +58,9 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(
                     if (response.status === 204) {
                         return {};
                     }
+                    console.log(response.text());
                     var body = response.json();
-                    return body.data || {};
+                    return body || {};
                 };
                 DeviceService.prototype.handleError = function (error) {
                     var errMsg = (error.message) ? error.message :

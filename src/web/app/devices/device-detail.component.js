@@ -35,7 +35,8 @@ System.register(['@angular/core', '@angular/router', './device.service'], functi
                 DeviceDetailComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.sub = this.route.params.subscribe(function (params) {
-                        var id = +params['id'];
+                        var id = params['id'];
+                        console.log("Id: " + id);
                         _this.getDevice(id);
                     });
                 };

@@ -26,7 +26,8 @@ export class DeviceDetailComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.sub = this.route.params.subscribe(
             params => {
-                let id = +params['id'];
+                let id = params['id'];
+                console.log("Id: " + id);
                 this.getDevice(id);
             }
         );

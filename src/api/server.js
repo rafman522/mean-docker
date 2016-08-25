@@ -12,6 +12,7 @@ var port = process.env.PORT || 8080;
 var config = require('./config');
 var mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
 mongoose.connect(config.db);
 
 var Device = require('./models/device');
@@ -19,12 +20,19 @@ var Device = require('./models/device');
 var router = express.Router();
 
 router.use(function(req, res, next) {
-   debug("request received.");
-   next(); 
+    debug("request received.");
+    next(); 
 });
 
+function noCache(req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next();
+};
+
 router.route('/devices')
-    .get(function (req, res) {
+    .get(noCache, function (req, res) {
         var result = Device.find(function (err, devices) {
             if (err) {
                 debug("/devices-ERROR:", err);
@@ -48,7 +56,7 @@ router.route('/devices')
     });
 
 router.route('/devices/:device_id')
-    .get(function(req, res) {
+    .get(noCache, function(req, res) {
         Device.findById(req.params.device_id, function(err, device) {
             if(err){
                 res.status(404).jsonp(err);
@@ -56,13 +64,16 @@ router.route('/devices/:device_id')
             res.status(200).jsonp(device);
         });
     }).put(function(req, res) {
-        Device.findById(req.param.device_id, function(err, device) {
+        Device.findById(req.params.device_id, function(err, device) {
             if(err) {
                 res.status(404).jsonp(err);
             }
 
+
+
             device.uri = req.body.uri;
-            device.name = req.body.uri;
+            device.name = req.body.name;
+            console.log("About to save");
             device.save(function(err) {
                 if(err) {
                     res.status(500).jsonp(err);

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DeviceService {
-    private devicesUrl = 'app/devices';
+    private devicesUrl = 'http://localhost:8080/api/devices';
 
     constructor(private http: Http) {}
 
@@ -24,21 +24,13 @@ export class DeviceService {
     }
 
     addDevice(device: Device): Observable<Device> {
-        let body = JSON.stringify(device);
-        let headers = new Headers({ 'content-type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http.post(this.devicesUrl, body, options)
+        return this.http.post(this.devicesUrl, device)
                         .map(this.extractData)
                         .catch(this.handleError);
     }
 
     updateDevice(device: Device) {
-        let body = JSON.stringify(device);
-        let headers = new Headers({ 'content-type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http.put(this.devicesUrl + "/" + device.id, body, options)
+        return this.http.put(this.devicesUrl + "/" + device.id, device)
                         .map(this.extractData)
                         .catch(this.handleError);
     }
@@ -53,9 +45,10 @@ export class DeviceService {
         if(response.status === 204) { //No Content
             return { };
         }
-        
+
+        console.log(response.text());
         let body = response.json();
-        return body.data || { };
+        return body || { };
     }
 
     handleError(error: any) {
