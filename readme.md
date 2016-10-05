@@ -1,12 +1,13 @@
 # MEAN-Docker
-Reference architecture for creating a MEAN application and hosting in Docker and using NGINX to serve static content. 
+Reference architecture for creating a MEAN application and hosting in Docker and using NGINX to serve static content.
 
 # Notes:
 This reference architecture was implemented using docker for windows but should work anywhere.
 
 # Required:
 * [VS Code](https://code.visualstudio.com/)
-* [Docker (latest)](https://www.docker.com/) 
+* [Docker (latest)](https://www.docker.com/)
+* [TypeScript](https://www.typescriptlang.org/) 
 
 ## Optional (To run without docker)
 * [node.js](https://nodejs.org/)
@@ -69,7 +70,7 @@ After every task is ran, the scripts will output "Finished!!!".
 ### composeForDebug
 As shown in the previous section the `composeForDebug` command will not only build the image from the Dockerfile.debug file, but will also start the containers so they can be debugged.
 
-Usage: From the command palette, provide `task composeForDebug`. 
+Usage: From the command palette, provide `task composeForDebug`.
 
 ### stop
 The `stop` command will stop all of the running containers using `docker-compose stop`.
@@ -97,6 +98,6 @@ Clean up docker images, replace the grep search with something more specific to 
 
 > docker images | grep "<none>" | awk '{print $3}' | xargs docker rmi
 
-Clean up docker volumes, removes all dangling (not currently attached) volumes so use this command sparingly 
+Clean up docker volumes, removes all dangling (not currently attached) volumes so use this command sparingly
 
 > docker volume ls -f dangling=true | awk '{print $2}' | xargs -r docker volume rm
