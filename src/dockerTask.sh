@@ -144,7 +144,7 @@ else
     "compose")
             ENVIRONMENT=$(echo $2 | tr "[:upper:]" "[:lower:]")
             compose
-            openSite
+            #openSite
             ;;
     "composeForDebug")
             ENVIRONMENT=$(echo $2 | tr "[:upper:]" "[:lower:]")
