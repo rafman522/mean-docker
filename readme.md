@@ -1,6 +1,9 @@
 # MEAN-Docker
 Reference architecture for creating a MEAN application and hosting in Docker and using NGINX to serve static content.
 
+# Tests
+![alt tag](https://circleci.com/gh/neudesic-digi-plat/mean-docker.svg?style=shield&circle-token=:circle-token)
+
 # Notes:
 This reference architecture was implemented using docker for windows but should work anywhere.
 
