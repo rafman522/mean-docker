@@ -10,3 +10,9 @@ dependencies:
         - sudo pip install docker-compose
     post: 
         - ./dockerTask.sh compose release 
+deployment:
+    dockerhub:
+        branch: master
+        commands:
+            - $DOCKER_HUB_API_TRIGGER_COMMAND
+            - $DOCKER_HUB_WFE_TRIGGER_COMMAND
