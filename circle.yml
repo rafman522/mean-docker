@@ -14,5 +14,8 @@ deployment:
     dockerhub:
         branch: master
         commands:
-            - $DOCKER_HUB_API_TRIGGER_COMMAND
-            - $DOCKER_HUB_WFE_TRIGGER_COMMAND
+            - docker login -u $DOCKER_USER -p $DOCKER_PASS
+            - docker tag deviceapi_deviceweb neudesic/mean-web:latest
+            - docker tag deviceapi_deviceapi neudesic/mean-api:latest
+            - docker push neudesic/mean-web
+            - docker push neudesic/mean-api
