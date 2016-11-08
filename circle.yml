@@ -14,7 +14,7 @@ deployment:
     dockerhub:
         branch: master
         commands:
-            - docker login -u $DOCKER_USER -p $DOCKER_PASS
+            - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
             - docker tag deviceapi_deviceweb neudesic/mean-web:latest
             - docker tag deviceapi_deviceapi neudesic/mean-api:latest
             - docker push neudesic/mean-web
