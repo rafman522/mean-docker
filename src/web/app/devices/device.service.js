@@ -27,7 +27,7 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Observable'], function(
             DeviceService = (function () {
                 function DeviceService(http) {
                     this.http = http;
-                    this.devicesUrl = 'http://localhost:8080/api/devices';
+                    this.devicesUrl = DEVICE_API_URL + "api/device";
                 }
                 DeviceService.prototype.getDevices = function () {
                     return this.http.get(this.devicesUrl)

@@ -5,9 +5,11 @@ import { Headers, RequestOptions } from '@angular/http'
 import { Device } from './device';
 import { Observable } from 'rxjs/Observable';
 
+declare var DEVICE_API_URL : any;
+
 @Injectable()
 export class DeviceService {
-    private devicesUrl = 'http://localhost:8080/api/devices';
+    private devicesUrl = DEVICE_API_URL + "api/device";
 
     constructor(private http: Http) {}
 
