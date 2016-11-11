@@ -23,4 +23,10 @@ describe('/devices tests', function () {
             .expect('Content-Type', /json/)
             .end(done);
     });
+
+    it('should return CORS header', function(done) {
+        request.get('/api/devices')
+            .expect('Access-Control-Allow-Origin', '*')
+            .end(done);
+    });
 });
