@@ -9,7 +9,7 @@ declare var DEVICE_API_URL : any;
 
 @Injectable()
 export class DeviceService {
-    private devicesUrl = DEVICE_API_URL + "api/device";
+    private devicesUrl = DEVICE_API_URL + "api/devices";
 
     constructor(private http: Http) {}
 
